@@ -43,4 +43,4 @@ If everything goes well, you should  be able to see the predcited salary vaule o
 check the output here: http://127.0.0.1:5000/predict
 
 ## Licensing, Authors, Acknowledgements <a name="Licensing"></a>
-The data used in this machine learning model is from University of California, Irvine [UCI](https://archive.ics.uci.edu/ml/datasets/Heart+failure+clinical+records) Machine Learning repository. Credit goes to [Maajid Khan](https://github.com/MaajidKhan/DeployMLModel-Flask) for the original API, HTML and CSS scripts used as a guide for deploying the model.
+The data used in this machine learning model is from University of California, Irvine [UCI](https://archive.ics.uci.edu/ml/datasets/Heart+failure+clinical+records) Machine Learning repository. Credit goes to [Maajid Khan](https://github.com/MaajidKhan/DeployMLModel-Flask) whose API, HTML and CSS scripts, with few modifications, were used for deploying the model.
