@@ -1,6 +1,6 @@
 pandas
 numpy
 sklearn
-pickle=4.0
+pickle==4.0
 gunicorn
 flask
