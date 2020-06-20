@@ -8,7 +8,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 
 # Loading dataset
-dataset = pd.read_csv('dataset.csv')
+dataset = pd.read_csv('processed_data.csv')
 
 x = dataset[['creatinine_phosphokinase', 'ejection_fraction', 'serum_creatinine', 'time']]
 y = dataset['death_event']
