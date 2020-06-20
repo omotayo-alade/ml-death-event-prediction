@@ -13,27 +13,27 @@ The scripts require Python versions of 3.*, Jupyter Notebook, Scikit Learn (for 
 
 ## Project Structure <a name="Structure"></a>
 The project contains the following components:
-1. model.py - This contains code for the Machine Learning model to predict death event (whether patient died during follow up period after having heart failure) based on training data in 'dataset.csv' file.
-2. app.py - This contains Flask APIs that receives patients' clinical features through GUI or API calls, computes the precited value based on our model and returns it.
-3. template - This folder contains the HTML template (index.html) that takes patients' clinical features as input values and displays the prediction whether patient died during the follow-up period or not.
-4. static - This directory contains the css folder that holds style.css for styling index.html.
-5. description.txt - This gives meaning to each clinical feature contained in the dataset.
-6. model_selection.ipynb - This is a Jupyter notebook file used for feature selection and model selection.
+* model.py - This contains code for the Machine Learning model to predict death event (whether patient died during follow up period after having heart failure) based on training data in 'dataset.csv' file.
+* app.py - This contains Flask APIs that receives patients' clinical features through GUI or API calls, computes the precited value based on our model and returns it.
+* template - This folder contains the HTML template (index.html) that takes patients' clinical features as input values and displays the prediction whether patient died during the follow-up period or not.
+* static - This directory contains the css folder that holds style.css for styling index.html.
+* description.txt - This gives meaning to each clinical feature contained in the dataset.
+* model_selection.ipynb - This is a Jupyter notebook file used for feature selection and model selection.
 
 ## Running the Project <a name="Running"></a>
-1. Ensure that you are in the project home directory. Create the machine learning model by running below command from command prompt
+* Ensure that you are in the project home directory. Create the machine learning model by running below command from command prompt
 ```
 python model.py
 ```
 This would create a serialized version of the model into a file model.pkl
 
-2. Run app.py using below command to start Flask API
+* Run app.py using below command to start Flask API
 ```
 python app.py
 ```
 By default, flask will run on port 5000.
 
-3. If browser does not open automatically, navigate to URL http://127.0.0.1:5000/ (or) http://localhost:5000
+* If browser does not open automatically, navigate to URL http://127.0.0.1:5000/ (or) http://localhost:5000
 
 You should be able to view the homepage.
 
