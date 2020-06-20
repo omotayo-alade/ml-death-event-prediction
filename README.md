@@ -1,6 +1,6 @@
 # ML Classification Model for Predicting Death Event following Heart Failure
 
-This is a machine learning classification model that predicts whether a patient died during follow-up period (days) after having a heart failure. The model was developed based on a recent dataset donated to University of California, Irvine [UCI](https://archive.ics.uci.edu/ml/datasets/Heart+failure+clinical+records) Machine Learning repository on 2nd May, 2020.
+This is a machine learning classification model that predicts whether a patient died during follow-up period (days) after having a heart failure. The model was developed based on a recent dataset donated to University of California, Irvine [UCI](https://archive.ics.uci.edu/ml/datasets/Heart+failure+clinical+records) Machine Learning repository on 5th Feb, 2020.
 
 ## Table of Contents
 * [Installation](#Installation)
