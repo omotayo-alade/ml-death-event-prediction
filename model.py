@@ -13,7 +13,7 @@ dataset = pd.read_csv('processed_data.csv')
 x = dataset[['creatinine_phosphokinase', 'ejection_fraction', 'serum_creatinine', 'time']]
 y = dataset['death_event']
 
-x = PowerTransformer().fit(x).transform(x)
+#x = PowerTransformer().fit(x).transform(x)
 
 # Splitting dataset into training and testing data
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
