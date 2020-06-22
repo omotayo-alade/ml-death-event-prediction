@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 #Jupyter
-.idea
-.ipynb_checkpoints
-.idea/
-.ipynb_checkpoints/
+/src/notebooks
+/scripts/ingest/.ipynb*
+/src/scripts/preparation/.ipynb*
+/src/scripts/modeling/.ipynb
