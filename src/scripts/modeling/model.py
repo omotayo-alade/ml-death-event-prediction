@@ -6,9 +6,9 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import PowerTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-
+    
 # Loading dataset
-dataset = pd.read_csv('../../../data/processed/processed_data.csv')
+dataset = pd.read_csv('data/processed/processed_data.csv')
 
 x = dataset[['creatinine_phosphokinase', 'ejection_fraction', 'serum_creatinine', 'time']]
 y = dataset['death_event']
@@ -25,4 +25,4 @@ model = LogisticRegression(solver='liblinear', penalty='l2', C=1.0, max_iter=200
 classifier = model.fit(x_train, y_train)
 
 # Saving model to disk
-pickle.dump(classifier, open('../../../outputs/models/model.pkl','wb'))
+pickle.dump(classifier, open('outputs/models/model.pkl','wb'))

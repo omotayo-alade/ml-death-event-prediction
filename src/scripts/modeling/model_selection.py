@@ -17,7 +17,7 @@ import pandas as pd
 import numpy as np
 
 # Load data into data frame
-df = pd.read_csv('../../data/raw/raw_data.csv')
+df = pd.read_csv('data/raw/raw_data.csv')
 
 df.head()
 
@@ -37,7 +37,7 @@ df.describe().transpose()
 
 df['age'] = df['age'].astype('int64')
 
-df.to_csv('../../data/processed/processed_data.csv')
+df.to_csv('data/processed/processed_data.csv')
 
 # Import libraries for visualzation
 import seaborn as sns
