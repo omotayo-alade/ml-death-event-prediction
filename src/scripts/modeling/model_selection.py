@@ -16,8 +16,8 @@
 import pandas as pd
 import numpy as np
 
-# Load data into datacframe
-df = pd.read_csv(r'C:\Users\Omotosho\Desktop\Tayo\Soft Skills\Python\Repositories\death-event-prediction\data\raw\raw_data.csv')
+# Load data into dataframe
+df = pd.read_csv('death-event-prediction-/data/raw/raw_data.csv')
 
 df.head()
 
