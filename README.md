@@ -9,27 +9,31 @@ This is a machine learning classification model that predicts whether a patient 
 * [Licensing, Authors, Acknowledgements](#Licensing)
 
 ## Installation <a name="Installation"></a>
-The scripts require Python versions of 3.*, Jupyter Notebook, Scikit Learn (for ML model ), Pickle (for creating a serialized version of the model) Flask (for API), all available through pip and anaconda packages.
+The scripts require Python versions of 3.7, Jupyter Notebook, Scikit Learn (for ML model ), Pickle (for creating a serialized version of the model) Flask (for API), all available through pip and anaconda packages.
 
 ## Project Structure <a name="Structure"></a>
 The project contains the following components:
-* model.py - This contains code for the Machine Learning model to predict death event (whether patient died during follow up period after having heart failure) based on training data in 'dataset.csv' file.
-* app.py - This contains Flask APIs that receives patients' clinical features through GUI or API calls, computes the precited value based on our model and returns it.
-* template - This folder contains the HTML template (index.html) that takes patients' clinical features as input values and displays the prediction whether patient died during the follow-up period or not.
-* static - This directory contains the css folder that holds style.css for styling index.html.
+* data - This directory contains raw and processed dataset from which the model is built.
+* output - This directory contains a subdirectory named models where the serialized model is saved.
+* src - This directory contains two main directory:
+  * ingest: this conatins app.py, a Flask API script that receives patients' clinical features through GUI or API calls, computes the precited value based on our model and           returns it. It also contains to sub-directories, (a) static, where css stylesheet is stored and (b) template, where index.html for user feature imputation is stored.
+  * modeling: this contains model.py script used for buiding the final model and model_selection.py script used for model_selection.
 * description.txt - This gives meaning to each clinical feature contained in the dataset.
-* model_selection.ipynb - This is a Jupyter notebook file used for feature selection and model selection.
 
 ## Running the Project <a name="Running"></a>
+You could run the project both online and locally. If you choose to run online, visit https://death-event-prediction.herokuapp.com
+
+If you prefer to run locally, follow steps below:
+
 * Ensure that you are in the project home directory. Create the machine learning model by running below command from command prompt
 ```
-python model.py
+python src/scripts/modeling/model.py
 ```
 This would create a serialized version of the model into a file model.pkl
 
 * Run app.py using below command to start Flask API
 ```
-python app.py
+python src/scripts/ingest/app.py
 ```
 By default, flask will run on port 5000.
 
