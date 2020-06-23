@@ -18,7 +18,7 @@ The project contains the following components:
 * src - This directory contains two main directory:
   * ingest: this conatins app.py, a Flask API script that receives patients' clinical features through GUI or API calls, computes the precited value based on our model and           returns it. It also contains to sub-directories, (a) static, where css stylesheet is stored and (b) template, where index.html for user feature imputation is stored.
   * modeling: this contains model.py script used for buiding the final model and model_selection.py script used for model_selection.
-* description.txt - This gives meaning to each clinical feature contained in the dataset.
+* data_description.txt - This gives meaning to each clinical feature contained in the dataset.
 
 ## Running the Project <a name="Running"></a>
 You could run the project both online and locally. If you choose to run online, visit https://death-event-prediction.herokuapp.com
