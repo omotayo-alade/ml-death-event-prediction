@@ -16,10 +16,10 @@ y = dataset['death_event']
 x = PowerTransformer().fit_transform(x)
 
 # Splitting dataset into training and testing data
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=25)
 
 # Creating model
-model = LogisticRegression(solver='liblinear', penalty='l2', C=1.0, max_iter=200, random_state=0)
+model = LogisticRegression(solver='saga', penalty='l2', C=0.2, max_iter=200, random_state=25)
 
 # Fitting the model with training data
 classifier = model.fit(x_train, y_train)
