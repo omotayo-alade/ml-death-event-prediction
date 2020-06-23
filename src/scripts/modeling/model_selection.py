@@ -1,7 +1,7 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: ipynb,../scripts/modeling//py
+#     formats: ipynb,py:light
 #     text_representation:
 #       extension: .py
 #       format_name: light
@@ -17,7 +17,8 @@ import pandas as pd
 import numpy as np
 
 # Load data into data frame
-df = pd.read_csv('data/raw/raw_data.csv')
+# df = pd.read_csv('data/raw/raw_data.csv')
+df = pd.read_csv('../../data/raw/raw_data.csv')
 
 df.head()
 
@@ -37,27 +38,28 @@ df.describe().transpose()
 
 df['age'] = df['age'].astype('int64')
 
-df.to_csv('data/processed/processed_data.csv')
+# df.to_csv('data/processed/processed_data.csv')
+df.to_csv('../../data/processed/processed_data.csv', index=False)
 
 # Import libraries for visualzation
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# +
-# Visualize distribution of features
-fig, ax = plt.subplots(figsize=(20, 15))
+# + active=""
+# # Visualize distribution of features
+# fig, ax = plt.subplots(figsize=(20, 15))
+#
+# df.plot(kind='density', subplots=True, layout=(4,4), sharex=False, sharey=False, ax=ax)
+#
+# plt.show()
 
-df.plot(kind='density', subplots=True, layout=(4,4), sharex=False, sharey=False, ax=ax)
-
-plt.show()
-
-# +
-# Visualize correlation of features
-fig, ax = plt.subplots(figsize=(10, 8))
-
-sns.heatmap(df.corr(), annot=True, ax=ax)
-
-plt.show()
+# + active=""
+# # Visualize correlation of features
+# fig, ax = plt.subplots(figsize=(10, 8))
+#
+# sns.heatmap(df.corr(), annot=True, ax=ax)
+#
+# plt.show()
 # -
 
 # Import libraries for modeling processes
@@ -128,7 +130,7 @@ def build_model(alg, x, y, processing=None):
     
     # Perform Recursive Feature Elimination for feature selection
     model = DecisionTreeClassifier(max_depth=4)
-    fit = RFE(model, n_features_to_select=4).fit(x, y)
+    fit = RFE(model, n_features_to_select=2).fit(x, y)
     feature_rank = pd.DataFrame({'Feature':x.columns,
                                  'Rank':fit.ranking_,
                                  'Selected':fit.support_})
@@ -140,7 +142,7 @@ def build_model(alg, x, y, processing=None):
     if processing is not None:
         x_new = processing.fit_transform(x_new)
     
-    x_train, x_test, y_train, y_test = train_test_split(x_new, y, test_size=0.2)
+    x_train, x_test, y_train, y_test = train_test_split(x_new, y, test_size=0.2, random_state=0)
     
     if alg == 'lreg':
         param = get_params_LR(x_train, y_train)
@@ -189,3 +191,5 @@ result_dict['support_vector_machine'] = build_model('svc', X, Y, processing=Powe
 
 # Compare results of the three models
 compare_results(result_dict)
+
+
