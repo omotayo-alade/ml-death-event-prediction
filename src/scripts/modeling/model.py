@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import pickle
 from sklearn.preprocessing import PowerTransformer
-from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
     
 # Loading dataset
@@ -18,7 +18,7 @@ x = PowerTransformer().fit_transform(x)
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 
 # Creating model
-model = SVC(kernel='linear', C=1)
+model = LogisticRegression(solver='liblinear', penalty='l1', C=0.1, max_iter=200)
 
 # Fitting the model with training data
 classifier = model.fit(x_train, y_train)
