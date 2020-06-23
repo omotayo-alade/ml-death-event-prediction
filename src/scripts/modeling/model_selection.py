@@ -36,35 +36,10 @@ df.info()
 
 df.describe().transpose()
 
-import seaborn as sns
-
-sns.distplot(df['death_event'])
-
 df['age'] = df['age'].astype('int64')
 
 # df.to_csv('data/processed/processed_data.csv')
 df.to_csv('../../data/processed/processed_data.csv', index=False)
-
-# Import libraries for visualzation
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-# + active=""
-# # Visualize distribution of features
-# fig, ax = plt.subplots(figsize=(20, 15))
-#
-# df.plot(kind='density', subplots=True, layout=(4,4), sharex=False, sharey=False, ax=ax)
-#
-# plt.show()
-
-# + active=""
-# # Visualize correlation of features
-# fig, ax = plt.subplots(figsize=(10, 8))
-#
-# sns.heatmap(df.corr(), annot=True, ax=ax)
-#
-# plt.show()
-# -
 
 # Import libraries for modeling processes
 import sklearn
@@ -75,6 +50,7 @@ from sklearn.feature_selection import RFE
 from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import recall_score
 from sklearn.metrics import precision_score
@@ -83,6 +59,27 @@ from sklearn.metrics import precision_score
 X = df.drop('death_event', axis=1)
 Y = df['death_event']
 
+# +
+# Perform feature selection using Random Forest Classifier embedded method
+params = [{'n_estimators':[10,20,30,40,50],
+           'criterion':['gini', 'entropy'], 'max_depth':[1,2,3,4,5], 'ccp_alpha':[x * 0.05 for x in range(1,6)]}]
+cl = RandomForestClassifier()
+grid = GridSearchCV(cl, params, scoring='accuracy', cv=5)
+fit = grid.fit(X,Y)
+n_est = fit.best_params_['n_estimators']
+crit = fit.best_params_['criterion']
+depth = fit.best_params_['max_depth']
+ccp = fit.best_params_['ccp_alpha']
+
+clf = RandomForestClassifier(n_estimators=n_est, criterion=crit, max_depth=depth, ccp_alpha=ccp)
+clf.fit(X,Y)
+coef = pd.Series(clf.feature_importances_, X.columns).sort_values(ascending=False)
+top_features = list(coef.index[0:4])
+X = X[top_features]
+X.head()
+
+
+# -
 
 # Define parameter tunning function for Logistic Regression
 def get_params_LR(x, y):
@@ -115,7 +112,7 @@ def get_params_DT(x, y):
 
 # Define parameter tunning function for Support Vector Classifier
 def get_params_SVC(x, y):
-    params = {'C':[x * 0.05 for x in range(1, 10)],
+    params = {'C':[1,2,3,4,5],
               'kernel':['linear', 'poly', 'rbf', 'sigmoid']}
     estimator = SVC()
     GS = GridSearchCV(estimator, params, scoring='accuracy', cv=5, n_jobs=1)
@@ -128,21 +125,11 @@ def get_params_SVC(x, y):
 # Create model building function
 def build_model(alg, x, y, processing=None):
     np.random.seed(25)
-    # Perform Recursive Feature Elimination for feature selection
-    model = DecisionTreeClassifier(max_depth=4)
-    fit = RFE(model, n_features_to_select=4).fit(x, y)
-    feature_rank = pd.DataFrame({'Feature':x.columns,
-                                 'Rank':fit.ranking_,
-                                 'Selected':fit.support_})
-    feature_rank = feature_rank.sort_values(by='Rank', ascending=True)
-    RFE_selected_features = feature_rank[feature_rank['Selected'] == True]
-    RFE_features = x[RFE_selected_features['Feature']]
-    x_new = RFE_features
    
     if processing is not None:
-        x_new = processing.fit_transform(x_new)
+        x = processing.fit_transform(x)
     
-    x_train, x_test, y_train, y_test = train_test_split(x_new, y, test_size=0.2)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
     
     if alg == 'lreg':
         param = get_params_LR(x_train, y_train)
@@ -164,7 +151,6 @@ def build_model(alg, x, y, processing=None):
             'recall score': recall_score(y_test, y_pred),
             'precision score': precision_score(y_test, y_pred),
             'accuracy score': accuracy_score(y_test, y_pred),
-            'features used': list(RFE_features.columns),
             'parameter used': param
             }
 
@@ -172,12 +158,11 @@ def build_model(alg, x, y, processing=None):
 # Create dictionary for results of different models
 result_dict = {}
 
-
-def parameter_list(result_dict):
-    for key in result_dict:
-        print('algorithm: ', key)
-        print('parameter used:', result_dict[key]['parameter used'])
-
+# Create parameter list
+#def parameter_list(result_dict):
+    #for key in result_dict:
+        #print('algorithm: ', key)
+        #print('parameter used:', result_dict[key]['parameter used'])
 
 # Fit Logistic Regression model
 result_dict['logistic_regression'] = build_model('lreg', X, Y, processing=PowerTransformer())
@@ -188,12 +173,14 @@ result_dict['decision_tree_classifier'] = build_model('dtree', X, Y, processing=
 # Fit Support Vector Classifier model
 result_dict['support_vector_machine'] = build_model('svc', X, Y, processing=PowerTransformer())
 
+# +
 # Compare results of the three models
-parameter_list(result_dict)
+#parameter_list(result_dict)
+# -
 
 result_df = pd.DataFrame(result_dict)
 result_df.head().transpose()
 
-# <p>Seeing as Logistic Regression gives the best relative result, it is chosen for the final model</p>
+# <p>Seeing as Support Vector Classifier gives the best relative result, it is chosen for the final model</p>
 
 

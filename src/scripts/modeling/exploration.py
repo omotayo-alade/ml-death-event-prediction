@@ -93,9 +93,3 @@ table.head()
 
 table = pd.crosstab(df['age_binned'], df['death_event'])
 table.head()
-
-df.shape
-
-
-
-
