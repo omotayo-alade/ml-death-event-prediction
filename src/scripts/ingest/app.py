@@ -1,7 +1,6 @@
 import numpy as np
 from flask import Flask, request, jsonify, render_template
 import pickle
-from sklearn.preprocessing import PowerTransformer
 
 model = pickle.load(open('outputs/models/model.pkl', 'rb'))
 app = Flask(__name__, template_folder='template') #Initialize the flask App

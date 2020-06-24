@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 # Loading dataset
 dataset = pd.read_csv('data/processed/processed_data.csv')
 
-x = dataset[['ejection_fraction', 'serum_creatinine', 'serum_sodium', 'time']] 
+x = dataset[['creatinine_phosphokinase', 'ejection_fraction', 'serum_creatinine', 'time']]
 y = dataset['death_event']
 
 x = PowerTransformer().fit_transform(x)
@@ -20,7 +20,7 @@ np.random.seed(25)
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 
 # Creating model
-model = LogisticRegression(solver='saga', penalty='l2', C=0.2, max_iter=200)
+model = LogisticRegression(solver='liblinear', penalty='l2', C=1, max_iter=200)
 
 # Fitting the model with training data
 classifier = model.fit(x_train, y_train)
