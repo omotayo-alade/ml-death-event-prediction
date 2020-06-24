@@ -17,12 +17,11 @@
 	<h1>Predict Death Event</h1>
      <!-- Main Input For Receiving Query to our ML -->
     <form action="{{ url_for('predict')}}"method="post">
+      <input type="text" name="creatinine_phosphokinase" placeholder="Creatinine Phosphokinase (mcg/L)" required="required" />
       <input type="text" name="ejection_fraction" placeholder="Ejection Fraction (%)" required="required" />
       <input type="text" name="serum_creatinine" placeholder="Serum Creatinine (mg/dL)" required="required" />
-      <input type="text" name="serum_sodium" placeholder="Serum Sodium (mEq/L)" required="required" />
       <input type="text" name="time" placeholder="Follow-up Period (No of Days)" required="required" />
-
-        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+      <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
     </form>
 
    <br>

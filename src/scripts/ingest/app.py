@@ -1,9 +1,10 @@
 import numpy as np
 from flask import Flask, request, jsonify, render_template
 import pickle
+from sklearn.preprocessing import PowerTransformer
 
-app = Flask(__name__, template_folder='template') #Initialize the flask App
 model = pickle.load(open('outputs/models/model.pkl', 'rb'))
+app = Flask(__name__, template_folder='template') #Initialize the flask App
 
 @app.route('/')
 def home():
@@ -19,9 +20,9 @@ def predict():
     result = model.predict(final_features)
     
     if int(result)== 1:
-        prediction ='Patient died during the follow-up period.'
+        prediction ='Patient died during the follow up period'
     else: 
-        prediction ='Patient did not die during the follow-up period.'
+        prediction ='Patient did not die during the follow up period.'
 
     return render_template('index.html', prediction_text=prediction)
 

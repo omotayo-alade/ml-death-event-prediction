@@ -59,27 +59,6 @@ from sklearn.metrics import precision_score
 X = df.drop('death_event', axis=1)
 Y = df['death_event']
 
-# +
-# Perform feature selection using Random Forest Classifier embedded method
-params = [{'n_estimators':[10,20,30,40,50],
-           'criterion':['gini', 'entropy'], 'max_depth':[1,2,3,4,5], 'ccp_alpha':[x * 0.05 for x in range(1,6)]}]
-cl = RandomForestClassifier()
-grid = GridSearchCV(cl, params, scoring='accuracy', cv=5)
-fit = grid.fit(X,Y)
-n_est = fit.best_params_['n_estimators']
-crit = fit.best_params_['criterion']
-depth = fit.best_params_['max_depth']
-ccp = fit.best_params_['ccp_alpha']
-
-clf = RandomForestClassifier(n_estimators=n_est, criterion=crit, max_depth=depth, ccp_alpha=ccp)
-clf.fit(X,Y)
-coef = pd.Series(clf.feature_importances_, X.columns).sort_values(ascending=False)
-top_features = list(coef.index[0:4])
-X = X[top_features]
-X.head()
-
-
-# -
 
 # Define parameter tunning function for Logistic Regression
 def get_params_LR(x, y):
@@ -87,7 +66,7 @@ def get_params_LR(x, y):
               'penalty':['l2', 'l1'], 'C':[x * 0.05 for x in range(1, 10)],
               'max_iter':[200, 100, 400,300]}
     estimator = LogisticRegression()
-    GS = GridSearchCV(estimator, params, scoring='accuracy', cv=5, n_jobs=1)
+    GS = GridSearchCV(estimator, params, scoring='accuracy', cv=5)
     GS.fit(x, y)
     solver = GS.best_params_['solver']
     penalty = GS.best_params_['penalty']
@@ -102,7 +81,7 @@ def get_params_DT(x, y):
               'max_depth':[1,2,3,4,5,6,7,8,9],
               'ccp_alpha':[x * 0.05 for x in range(1, 10)],}
     estimator = DecisionTreeClassifier()
-    GS = GridSearchCV(estimator, params, scoring='accuracy', cv=5, n_jobs=1)
+    GS = GridSearchCV(estimator, params, scoring='accuracy', cv=5)
     GS.fit(x, y)
     criterion = GS.best_params_['criterion']
     max_depth = GS.best_params_['max_depth']
@@ -115,7 +94,7 @@ def get_params_SVC(x, y):
     params = {'C':[1,2,3,4,5],
               'kernel':['linear', 'poly', 'rbf', 'sigmoid']}
     estimator = SVC()
-    GS = GridSearchCV(estimator, params, scoring='accuracy', cv=5, n_jobs=1)
+    GS = GridSearchCV(estimator, params, scoring='accuracy', cv=5)
     GS.fit(x, y)
     C = GS.best_params_['C']
     kernel = GS.best_params_['kernel']
@@ -125,7 +104,17 @@ def get_params_SVC(x, y):
 # Create model building function
 def build_model(alg, x, y, processing=None):
     np.random.seed(25)
-   
+    
+    model = DecisionTreeClassifier(max_depth=4)
+    fit = RFE(model, n_features_to_select=4).fit(x, y)
+    feature_rank = pd.DataFrame({'Feature':X.columns,
+                                 'Rank':fit.ranking_,
+                                 'Selected':fit.support_})
+    feature_rank = feature_rank.sort_values(by='Rank', ascending=True)
+    RFE_selected_features = feature_rank[feature_rank['Selected'] == True]
+    RFE_features = x[RFE_selected_features['Feature']]
+    x = RFE_features
+    
     if processing is not None:
         x = processing.fit_transform(x)
     
@@ -151,18 +140,12 @@ def build_model(alg, x, y, processing=None):
             'recall score': recall_score(y_test, y_pred),
             'precision score': precision_score(y_test, y_pred),
             'accuracy score': accuracy_score(y_test, y_pred),
-            'parameter used': param
-            }
+            'parameter used': param,
+            'feature used': list(RFE_features.columns)}
 
 
 # Create dictionary for results of different models
 result_dict = {}
-
-# Create parameter list
-#def parameter_list(result_dict):
-    #for key in result_dict:
-        #print('algorithm: ', key)
-        #print('parameter used:', result_dict[key]['parameter used'])
 
 # Fit Logistic Regression model
 result_dict['logistic_regression'] = build_model('lreg', X, Y, processing=PowerTransformer())
@@ -173,14 +156,15 @@ result_dict['decision_tree_classifier'] = build_model('dtree', X, Y, processing=
 # Fit Support Vector Classifier model
 result_dict['support_vector_machine'] = build_model('svc', X, Y, processing=PowerTransformer())
 
-# +
-# Compare results of the three models
-#parameter_list(result_dict)
-# -
-
 result_df = pd.DataFrame(result_dict)
 result_df.head().transpose()
 
-# <p>Seeing as Support Vector Classifier gives the best relative result, it is chosen for the final model</p>
+result_dict['logistic_regression']['feature used']
+
+# <p>Seeing as Logistic Regression gave the best relative result, it is chosen for the final model</p>
+
+
+
+
 
 
