@@ -17,99 +17,60 @@
 import pandas as pd
 import numpy as np
 
-# Load dataset into dataframe
-# df = pd.read_csv('data/processed/processed_data.csv')
-df = pd.read_csv('../../data/processed/processed_data.csv')
-df.head()
+# Load data into data frame
+# df = pd.read_csv('data/raw/raw_data.csv')
+df = pd.read_csv('../../data/raw/raw_data.csv')
 
+df.columns
+
+# Rename columns
 df.columns = ['Age', 'Anaemia', 'CP', 'Diabetes', 'EF', 'HBP',
-              'Platelets','SC', 'SS', 'Gender', 'Smoking', 'Time', 'Death_Event']
+              'Platelets', 'SC', 'SS', 'Gender', 'Smoking', 'Time', 'Death_Event']
+
+df.shape
+
+df.info()
+
+df.describe().transpose()
+
+df['Age'] = df['Age'].astype('int64')
+
+# Export data to csv
+df.to_csv('../../data/processed/processed_data.csv', index=False)
 
 df.corr()['Death_Event'][:-1].sort_values(ascending=False)
 
 import seaborn as sns
 import matplotlib.pyplot as plt
+from matplotlib import rcParams as rc
 from yellowbrick.target import FeatureCorrelation
+
+rc['xtick.labelsize'] = 15.0
+rc['ytick.labelsize'] = 15.0
+rc['xtick.direction'] = 'out'
+rc['axes.labelsize'] = 15.0
+rc['axes.titlesize'] = 18.0
+rc['savefig.format'] = 'png'
+rc['savefig.dpi'] = 600
+rc['legend.fontsize'] = 15
 
 x = df.drop('Death_Event', axis=1)
 y = df['Death_Event']
-visual = FeatureCorrelation(method='pearson', label=x.columns, sort=True).fit(x,y)
-visual.poof();
+fig = plt.figure(figsize=(8,6))
+corr = FeatureCorrelation(method='pearson', label=x.columns, sort=True).fit(x,y);
+plt.savefig('../../outputs/visuals/correlations')
+corr.show();
 
-fig, ax = plt.subplots(figsize=(15,8))
-sns.heatmap(df.corr(), annot=True, square=False, ax=ax)
+fig, ax = plt.subplots(figsize=(20,10))
+sns.heatmap(df.corr(), annot=True, square=False, ax=ax);
+ax.set_title('Correlations between features')
+plt.savefig('../../outputs/visuals/correlations_all')
 plt.show()
 
-df.head(2)
-
-df['Anaemia'].replace({0:'False', 1:'True'}, inplace=True)
-df['Diabetes'].replace({0:'False', 1:'True'}, inplace=True)
-df['HBP'].replace({0:'False', 1:'True'}, inplace=True)
-df['Gender'].replace({0:'Female', 1:'Male'}, inplace=True)
-df['Smoking'].replace({0:'False', 1:'True'}, inplace=True)
-df['Death_Event'].replace({0:'Survived', 1:'Died'}, inplace=True)
-
-bins = np.linspace(df['Age'].min(), df['Age'].max(), 5, dtype=('int'))
-labels = ['40-53', '53-67', '67-81', '81-95']
-df['Age_Group'] = pd.cut(df['Age'], bins=bins, labels=labels, include_lowest=True)
-df['Age_Group'].unique()
-
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-age_grouped = df.groupby('Age_Group')[['CP', 'EF', 'Platelets', 'SC', 'SS', 'Time']].mean()
-age_grouped
-
-anaemia_grouped = df.groupby('Anaemia')[['CP', 'EF', 'Platelets', 'SC', 'SS', 'Time']].mean()
-anaemia_grouped
-
-diabetes_grouped = df.groupby('Diabetes')[['CP', 'EF', 'Platelets', 'SC', 'SS', 'Time']].mean()
-diabetes_grouped
-
-HBP_grouped = df.groupby('HBP')[['CP', 'EF', 'Platelets', 'SC', 'SS', 'Time']].mean()
-HBP_grouped
-
-sex_grouped = df.groupby('Gender')[['CP', 'EF', 'Platelets', 'SC', 'SS', 'Time']].mean()
-sex_grouped
-
-smoking_grouped = df.groupby('Smoking')[['CP', 'EF', 'Platelets', 'SC', 'SS', 'Time']].mean()
-smoking_grouped
-
-table = pd.crosstab(df['Age_Group'], df['Anaemia'])
-table.plot(kind='bar')
-
-table = pd.crosstab(df['Age_Group'], df['Diabetes'])
-table.plot(kind='bar')
-
-table = pd.crosstab(df['Age_Group'], df['HBP'])
-table.plot(kind='bar')
-
-table = pd.crosstab(df['Age_Group'], df['Gender'])
-table.plot(kind='bar')
-
-table = pd.crosstab(df['Age_Group'], df['Smoking'])
-table.plot(kind='bar')
-
-table = pd.crosstab(df['Age_Group'], df['Death_Event'])
-table.plot(kind='bar')
-
-table = pd.crosstab(df['Anaemia'], df['Death_Event'])
-table.plot(kind='bar')
-
-table = pd.crosstab(df['Diabetes'], df['Death_Event'])
-table.plot(kind='bar')
-
-table = pd.crosstab(df['HBP'], df['Death_Event'])
-table.plot(kind='bar')
-
-table = pd.crosstab(df['Gender'], df['Death_Event'])
-table.plot(kind='bar')
-
-table = pd.crosstab(df['Smoking'], df['Death_Event'])
-table.plot(kind='bar')
-
-sns.barplot(df['Age_Group'], df['Time'], errwidth=0)
-
-pd.crosstab(df['Age_Group'], df['Death_Event'])
+# Age distribution of Patients
+fig, ax = plt.subplots(figsize=(8,6))
+sns.kdeplot(df['Age'], legend=False, shade=True, ax=ax);
+plt.savefig('../../outputs/visuals/age_distribution')
+ax.set_title('Age Distribution of Patients')
 
 
