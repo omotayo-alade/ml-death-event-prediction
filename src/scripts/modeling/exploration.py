@@ -57,19 +57,19 @@ rc['legend.fontsize'] = 15
 x = df.drop('Death_Event', axis=1)
 y = df['Death_Event']
 fig = plt.figure(figsize=(8,6))
-corr = FeatureCorrelation(method='pearson', label=x.columns, sort=True).fit(x,y);
+corr = FeatureCorrelation(method='pearson', label=x.columns, sort=True).fit(x,y)
 plt.savefig('../../outputs/visuals/correlations')
-corr.show();
+corr.show()
 
 fig, ax = plt.subplots(figsize=(20,10))
-sns.heatmap(df.corr(), annot=True, square=False, ax=ax);
+sns.heatmap(df.corr(), annot=True, square=False, ax=ax)
 ax.set_title('Correlations between features')
 plt.savefig('../../outputs/visuals/correlations_all')
 plt.show()
 
 # Age distribution of Patients
 fig, ax = plt.subplots(figsize=(8,6))
-sns.kdeplot(df['Age'], legend=False, shade=True, ax=ax);
+sns.kdeplot(df['Age'], legend=False, shade=True, ax=ax)
 plt.savefig('../../outputs/visuals/age_distribution')
 ax.set_title('Age Distribution of Patients')
 

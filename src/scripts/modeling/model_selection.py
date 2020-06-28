@@ -34,6 +34,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import recall_score
 from sklearn.metrics import precision_score
+from sklearn.metrics import f1_score
+from yellowbrick.model_selection import RFECV
 
 # Separate features and target variables
 X = df.drop('Death_Event', axis=1)
@@ -43,15 +45,12 @@ Y = df['Death_Event']
 # Define parameter tunning function for Logistic Regression
 def get_params_LR(x, y):
     params = {'solver':['liblinear', 'saga'],
-              'penalty':['l2', 'l1'], 'C':[x for x in range(1, 11)],
+              'penalty':['l2', 'l1'],
+              'C':[x for x in range(1, 11)],
               'max_iter':[200, 100, 400,300]}
     estimator = LogisticRegression()
-    GS = GridSearchCV(estimator, params, scoring='accuracy', cv=5)
+    GS = GridSearchCV(estimator, params, scoring='accuracy', cv=4, n_jobs=-1)
     GS.fit(x, y)
-    solver = GS.best_params_['solver']
-    penalty = GS.best_params_['penalty']
-    C = GS.best_params_['C']
-    max_iter = GS.best_params_['max_iter']
     return GS.best_params_ #[solver, penalty, C, max_iter]
 
 
@@ -59,13 +58,10 @@ def get_params_LR(x, y):
 def get_params_DT(x, y):
     params = {'criterion':['entropy', 'gini'],
               'max_depth':[1,2,3,4,5,6,7,8,9],
-              'ccp_alpha':[x * 0.05 for x in range(1, 10)],}
+              'ccp_alpha':[x * 0.05 for x in range(1, 10)]}
     estimator = DecisionTreeClassifier()
-    GS = GridSearchCV(estimator, params, scoring='accuracy', cv=5)
+    GS = GridSearchCV(estimator, params, scoring='accuracy', cv=4, n_jobs=-1)
     GS.fit(x, y)
-    criterion = GS.best_params_['criterion']
-    max_depth = GS.best_params_['max_depth']
-    ccp_alpha = GS.best_params_['ccp_alpha']
     return GS.best_params_ #[criterion, max_depth, ccp_alpha]
 
 
@@ -74,10 +70,8 @@ def get_params_SVC(x, y):
     params = {'C':[1,2,3,4,5],
               'kernel':['linear', 'poly', 'rbf', 'sigmoid']}
     estimator = SVC()
-    GS = GridSearchCV(estimator, params, scoring='accuracy', cv=5)
+    GS = GridSearchCV(estimator, params, scoring='accuracy', cv=4, n_jobs=-1)
     GS.fit(x, y)
-    C = GS.best_params_['C']
-    kernel = GS.best_params_['kernel']
     return GS.best_params_ #[C, kernel]
 
 
@@ -86,7 +80,7 @@ def build_model(alg, x, y, processing=None):
     np.random.seed(25)
     
     # Select feature using recursive feature selection
-    model = DecisionTreeClassifier(max_depth=4)
+    model = DecisionTreeClassifier(max_depth=5)
     fit = RFE(model, n_features_to_select=4).fit(x, y)
     feature_rank = pd.DataFrame({'Feature':X.columns,
                                  'Rank':fit.ranking_,
@@ -116,8 +110,7 @@ def build_model(alg, x, y, processing=None):
     
     if alg == 'svc':
         param = get_params_SVC(x_train, y_train)
-        alg = SVC(C=param['C'],
-                  kernel=param['kernel'])
+        alg = SVC(C=param['C'], kernel=param['kernel'])
 
     model = alg.fit(x_train, y_train)
     y_pred = model.predict(x_test)
@@ -154,5 +147,3 @@ result_df = pd.DataFrame(result_dict)
 result_df.head().transpose()
 
 # <p>Seeing as Logistic Regression gave the best relative result, it is chosen for the final model</p>
-
-

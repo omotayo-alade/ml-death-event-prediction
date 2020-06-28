@@ -1,6 +1,6 @@
 # ML Classification Model for Predicting Death Event following Heart Failure
 
-This is a machine learning classification model that predicts whether a patient died during follow-up period (days) after having a heart failure. The model was developed based on a recent dataset donated to University of California, Irvine [UCI](https://archive.ics.uci.edu/ml/datasets/Heart+failure+clinical+records) Machine Learning repository on 5th Feb, 2020.
+This is a machine learning classification model that predicts whether a patient died during follow-up period (days) proceeding a heart failure. The model was developed based on a recent dataset donated to University of California, Irvine [UCI](https://archive.ics.uci.edu/ml/datasets/Heart+failure+clinical+records) Machine Learning repository on 5th Feb, 2020.
 
 ## Table of Contents
 * [Installation](#Installation)
@@ -47,4 +47,4 @@ If everything goes well, you should  be able to see the predcited salary vaule o
 check the output here: http://127.0.0.1:5000/predict
 
 ## Licensing, Authors, Acknowledgements <a name="Licensing"></a>
-The data used in this machine learning model is from University of California, Irvine [UCI](https://archive.ics.uci.edu/ml/datasets/Heart+failure+clinical+records) Machine Learning repository. Credit goes to [Maajid Khan](https://github.com/MaajidKhan/DeployMLModel-Flask) whose API, HTML and CSS scripts, with few modifications, were used for deploying the model.
+The data used in this machine learning model is from University of California, Irvine [UCI](https://archive.ics.uci.edu/ml/datasets/Heart+failure+clinical+records) Machine Learning repository.
