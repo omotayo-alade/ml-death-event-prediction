@@ -26,25 +26,6 @@
 </head>
 
 <body>
-<<<<<<< HEAD
- <div class="login">
-	<h1>Predict Death Event</h1>
-     <!-- Main Input For Receiving Query to our ML -->
-    <form action="{{ url_for('predict')}}"method="post">
-      <input type="text" name="CP" placeholder="Creatinine Phosphokinase (mcg/L)" required="required" />
-      <input type="text" name="EF" placeholder="Ejection Fraction (%)" required="required" />
-      <input type="text" name="SC" placeholder="Serum Creatinine (mg/dL)" required="required" />
-      <input type="text" name="Time" placeholder="Follow-up Period (No of Days)" required="required" />
-      <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
-    </form>
-
-   <br>
-   <br>
-   {{ prediction_text }}
-
- </div>
-
-=======
   <header>
     <a style="float: right; margin: 2em;"
       href="https://github.com/omotayo-alade/death-event-prediction/blob/master/README.md" target="_blank">README</a>
@@ -75,7 +56,6 @@
       <div class="form-group">
         <button type="button" class="btn btn-primary btn-block btn-large" data-toggle="modal"
           data-target="#output-modal">Predict</button>
->>>>>>> 186eb5a76fc0053e325437ff9d5ef9c9123b98a0
 
         <p class="text-center mt-2" style="font-size: 13px;">Made with 💓 by <a
             href="https://github.com/omotayo-alade">Alade Omotayo</a></p>
