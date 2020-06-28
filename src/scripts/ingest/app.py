@@ -16,12 +16,10 @@ def predict():
     '''
     int_features = [float(x) for x in request.form.values()]
     final_features = [np.array(int_features)]
-    result = model.predict(final_features)
+    result = model.predict_proba(final_features).tolist()
+    output = round((result[0][1] * 100), decimal=2)
     
-    if int(result)== 1:
-        prediction ='Patient died during the follow up period'
-    else: 
-        prediction ='Patient did not die during the follow up period.'
+    prediction ='Patient has {} chance of survival'.format(output)
 
     return render_template('index.html', prediction_text=prediction)
 
