@@ -19,7 +19,7 @@ def predict():
     result = model.predict_proba(final_features).tolist()
     output = round((result[0][1] * 100), decimal=2)
     
-    prediction ='Patient has {} chance of survival'.format(output)
+    prediction ='Patient has %.2f chance of survival' % output
 
     return render_template('index.html', prediction_text=prediction)
 
