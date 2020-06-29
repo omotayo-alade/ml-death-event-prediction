@@ -30,7 +30,7 @@
       href="https://github.com/omotayo-alade/heart-failure-survival/blob/master/README.md" target="_blank">README</a>
   </header>
   <main class="col-12 d-flex justify-center main" style="display: flex; justify-content: center; margin: 4em 0;">
-    <form action="/predict" method="POST">
+    <form action="/predict" method="POST" id="myForm">
       <h1 style="font-size: 3em;">Predict Survival Probability</h1>
       <div class="form-group">
        <!-- <label for="creatinine">Creatinine Phosphokinase (mcg/L)</label> -->
@@ -71,7 +71,8 @@
         </div>
         <div class="modal-body">
           <!-- Prediction output to be ingested here  -->
-          {{ prediction }}
+          <p class="text-center mt-2" style="font-size: 1.2em; font-style: oblique; font-weight: bold;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{{ prediction }}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -81,12 +82,13 @@
   </div>
   {% endif %}
   <script>
-    $(document).ready(function () {
-    $('#myModal').modal({
-           backdrop: 'static',
-           keyboard: false
-    })
-   });
+    $(document).ready(function (){
+    $('#myModal').modal({backdrop: 'static', keyboard: false})
+    });
+
+    $(document).on('hide.bs.modal', '#myModal', function (e) {
+        $('#myModal').empty();
+    });
   </script>
 </body>
 
