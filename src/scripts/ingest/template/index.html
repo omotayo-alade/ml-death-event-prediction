@@ -27,37 +27,37 @@
 <body>
   <header>
     <a style="float: right; margin: 2em;"
-      href="https://github.com/omotayo-alade/death-event-prediction/blob/master/README.md" target="_blank">README</a>
+      href="https://github.com/omotayo-alade/heart-failure-survival/blob/master/README.md" target="_blank">README</a>
   </header>
   <main class="col-12 d-flex justify-center main" style="display: flex; justify-content: center; margin: 4em 0;">
     <form action="{{ url_for('predict')}}" method="post">
-      <h1 style="font-size: 3em;">Predict Death Event</h1>
+      <h1 style="font-size: 3em;">Predict Survival Probability</h1>
       <div class="form-group">
-        <label for="creatinine">Creatinine Phosphokinase (mcg/L)</label>
+       <!-- <label for="creatinine">Creatinine Phosphokinase (mcg/L)</label> -->
         <input type="text" class="form-control" id="creatinine" name="creatinine_phosphokinase"
           placeholder="Creatinine Phosphokinase (mcg/L)" required>
       </div>
       <div class="form-group">
-        <label for="ejection">Ejection Fraction (%)</label>
+      <!--  <label for="ejection">Ejection Fraction (%)</label> -->
         <input type="text" class="form-control" name="ejection_fraction" id="ejection"
           placeholder="Ejection Fraction (%)" required>
       </div>
       <div class="form-group">
-        <label for="serum">Serum Creatinine (mg/dL)</label>
+      <!-- <label for="serum">Serum Creatinine (mg/dL)</label> -->
         <input type="text" class="form-control" name="serum_creatinine" id="serum"
           placeholder="Serum Creatinine (mg/dL)" required>
       </div>
       <div class="form-group">
-        <label for="time">Follow-up Period (No of Days)</label>
+      <!--  <label for="time">Follow-up Period (No of Days)</label> -->
         <input type="text" class="form-control" id="time" name="time" placeholder="Follow-up Period (No of Days)"
           required>
       </div>
       <div class="form-group">
-        <button id="submit" type="submit" class="btn btn-primary btn-block btn-large" data-toggle="modal"
-          data-target="#output-modal">Predict</button>
+        <button id="submit" type="submit" class="btn btn-primary btn-block btn-large"
+        data-toggle="modal" data-target="#output-modal">Predict</button>
 
-        <p class="text-center mt-2" style="font-size: 13px;">Made with 💓 by <a
-            href="https://github.com/omotayo-alade">Alade Omotayo</a></p>
+        <p class="text-center mt-2" style="font-size: 13px; padding-top: 10px;";>Made with 💓 by <a
+            href="https://github.com/omotayo-alade">Omotayo Alade</a></p>
       </div>
     </form>
   </main>
@@ -81,7 +81,7 @@
       </div>
     </div>
     <script>
-      $('#myModal').on('shown.bs.modal', () => {
+      $('#output-modal').on('shown.bs.modal', () => {
         $('#myInput').trigger('focus');
       });
 
