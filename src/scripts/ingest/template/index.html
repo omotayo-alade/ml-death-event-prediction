@@ -54,7 +54,7 @@
           required>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-primary btn-block btn-large" data-toggle="modal"
+        <button id="submit" type="submit" class="btn btn-primary btn-block btn-large" data-toggle="modal"
           data-target="#output-modal">Predict</button>
 
         <p class="text-center mt-2" style="font-size: 13px;">Made with 💓 by <a
@@ -84,6 +84,11 @@
     <script>
       $('#myModal').on('shown.bs.modal', () => {
         $('#myInput').trigger('focus');
+      });
+
+      const btn = document.querySelector('#submit');
+      btn.addEventListener('click', e => {
+        e.preventDefault();
       });
     </script>
 </body>
