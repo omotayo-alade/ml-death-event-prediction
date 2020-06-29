@@ -1,6 +1,6 @@
-# ML Classification Model for Predicting Death Event following Heart Failure
+# Predicting Probability of Survival proceeding Heart Failure
 
-This is a machine learning classification model that predicts whether a patient died during follow-up period (days) proceeding a heart failure. The model was developed based on a recent dataset donated to University of California, Irvine [UCI](https://archive.ics.uci.edu/ml/datasets/Heart+failure+clinical+records) Machine Learning repository on 5th Feb, 2020.
+This is a machine learning classification model that predicts a patient chance of survival proceeding a heart failure, giving certain inputs. The model was developed based on a recent dataset donated to University of California, Irvine [UCI](https://archive.ics.uci.edu/ml/datasets/Heart+failure+clinical+records) Machine Learning repository on 5th Feb, 2020.
 
 ## Table of Contents
 * [Installation](#Installation)
@@ -21,7 +21,7 @@ The project contains the following components:
 * data_description.txt - This gives meaning to each clinical feature contained in the dataset.
 
 ## Running the Project <a name="Running"></a>
-You could run the project both online and locally. If you choose to run online, visit https://death-event-prediction.herokuapp.com
+You could run the project both online and locally. If you choose to run online, visit https://heart-failure-survival.herokuapp.com
 
 If you prefer to run locally, follow steps below:
 

@@ -3,11 +3,11 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Death Event Prediction</title>
+  <title>Heart Failure Survival Analysis</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
-    content="A classification model that predicts whether a patient died or not during the follow-up period proceeding a heart failure.">
+    content="A classification model that predicts a patients chance of survival proceeding a heart failure.">
 
   <!-- CSS only -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -27,42 +27,41 @@
 <body>
   <header>
     <a style="float: right; margin: 2em;"
-      href="https://github.com/omotayo-alade/death-event-prediction/blob/master/README.md" target="_blank">README</a>
+      href="https://github.com/omotayo-alade/heart-failure-survival/blob/master/README.md" target="_blank">README</a>
   </header>
   <main class="col-12 d-flex justify-center main" style="display: flex; justify-content: center; margin: 4em 0;">
-    <form action="{{ url_for('predict')}}" method="post">
-      <h1 style="font-size: 3em;">Predict Death Event</h1>
+    <form action="{{ url_for('predict')}}" method="post" id="myForm">
+      <h1 style="font-size: 2em;">Predict Survival Probability</h1>
       <div class="form-group">
-        <label for="creatinine">Creatinine Phosphokinase (mcg/L)</label>
-        <input type="text" class="form-control" id="creatinine" name="creatinine_phosphokinase"
+        <!-- <label for="creatinine">Creatinine Phosphokinase (mcg/L)</label> -->
+        <input type="text" class="form-control" id="creatinine" name="CP"
           placeholder="Creatinine Phosphokinase (mcg/L)" required>
       </div>
       <div class="form-group">
-        <label for="ejection">Ejection Fraction (%)</label>
-        <input type="text" class="form-control" name="ejection_fraction" id="ejection"
+        <!-- <label for="ejection">Ejection Fraction (%)</label> -->
+        <input type="text" class="form-control" name="EF" id="ejection"
           placeholder="Ejection Fraction (%)" required>
       </div>
       <div class="form-group">
-        <label for="serum">Serum Creatinine (mg/dL)</label>
-        <input type="text" class="form-control" name="serum_creatinine" id="serum"
+        <!-- <label for="serum">Serum Creatinine (mg/dL)</label> -->
+        <input type="text" class="form-control" name="SC" id="serum"
           placeholder="Serum Creatinine (mg/dL)" required>
       </div>
       <div class="form-group">
-        <label for="time">Follow-up Period (No of Days)</label>
-        <input type="text" class="form-control" id="time" name="time" placeholder="Follow-up Period (No of Days)"
+        <!-- <label for="time">Follow-up Period (No of Days)</label> -->
+        <input type="text" class="form-control" id="time" name="Time" placeholder="Follow-up Period (No of Days)"
           required>
       </div>
       <div class="form-group">
-        <button type="button" class="btn btn-primary btn-block btn-large" data-toggle="modal"
-          data-target="#output-modal">Predict</button>
+        <button type="button" class="btn btn-primary btn-block btn-large" data-target="#myModal" data-toggle="modal">Predict</button>
 
-        <p class="text-center mt-2" style="font-size: 13px;">Made with 💓 by <a
-            href="https://github.com/omotayo-alade">Alade Omotayo</a></p>
+        <p class="text-center mt-2" style="font-size: 13px; padding: 1em;">Made with 💓 by <a
+            href="https://github.com/omotayo-alade">Omotayo Alade</a></p>
       </div>
     </form>
   </main>
   <!-- Modal -->
-  <div class="modal fade" id="output-modal" tabindex="-1" role="dialog" aria-labelledby="output" aria-hidden="true">
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="output" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -80,9 +79,10 @@
         </div>
       </div>
     </div>
+  </div>
     <script>
       $('#myModal').on('shown.bs.modal', () => {
-        $('#myInput').trigger('focus');
+        $('#myForm').trigger('focus');
       });
     </script>
 </body>
