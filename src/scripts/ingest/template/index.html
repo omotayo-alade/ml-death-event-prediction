@@ -54,7 +54,7 @@
       </div>
       <div class="form-group">
         <button id="submit" type="submit" class="btn btn-primary btn-block btn-large"
-        data-toggle="modal" data-target="#output-modal">Predict</button>
+        data-toggle="modal" data-target="#myModal">Predict</button>
 
         <p class="text-center mt-2" style="font-size: 13px; padding-top: 10px;";>Made with 💓 by <a
             href="https://github.com/omotayo-alade">Omotayo Alade</a></p>
@@ -62,7 +62,7 @@
     </form>
   </main>
   <!-- Modal -->
-  <div class="modal fade" id="output-modal" tabindex="-1" role="dialog" aria-labelledby="output" aria-hidden="true">
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="output" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -81,7 +81,7 @@
       </div>
     </div>
     <script>
-      $('#output-modal').on('shown.bs.modal', () => {
+      $('#myModal').on('shown.bs.modal', () => {
         $('#myInput').trigger('focus');
       });
 
