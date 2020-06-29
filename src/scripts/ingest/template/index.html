@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
-    content="A classification model that predicts a patients chance of survival proceeding a heart failure.">
+    content="A classification model that predicts a patient's chance of survival proceeding a heart failure.">
   <title>Heart Failure Survival Analysis</title>
   <style data-jss="" data-meta="MuiTypography">
     .MuiTypography-root {
@@ -258,6 +258,7 @@
     </style>
 
   <!-- CSS only -->
+  <link href = "bootstrap/css/bootstrap.min.css" rel = "stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <!-- JS, Popper.js, and jQuery -->
@@ -280,7 +281,8 @@
   </header>
   <main class="MuiContainer-root MuiContainer-maxWidthXs" style="display: flex; justify-content: center;">
     <div class="jss39">
-    <h1 class="MuiTypography-root MuiTypography-h5" style="text-align: center;">A survival probability predictor for heart failure patients</h1>
+    <img class="img-responsive" alt="heart-failure" src="assets/heart.png">
+      <h1 class="MuiTypography-root MuiTypography-h5" style="text-align: center;">A survival probability predictor for heart failure patients</h1>
     <form class="jss41" action="/predict" method="POST" id="myForm">
       <div class="form-group">
        <!-- <label for="creatinine">Creatinine Phosphokinase (mcg/L)</label> -->
