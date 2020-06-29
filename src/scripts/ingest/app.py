@@ -21,7 +21,7 @@ def predict():
     output = round((result[0][1] * 100), 3)
 
     model_prediction = 'Patient has about {}% chance of survival.'.format(output)
-    
+
     return render_template('index.html', prediction=model_prediction, show_prediction=True)
 
 if __name__ == '__main__':
