@@ -9,8 +9,8 @@ from sklearn.model_selection import train_test_split
 # Loading dataset
 dataset = pd.read_csv('data/processed/processed_data.csv')
 
-x = dataset[['creatinine_phosphokinase', 'ejection_fraction', 'serum_creatinine', 'time']]
-y = dataset['death_event']
+x = dataset[['CP', 'EF', 'SC', 'Time']]
+y = dataset['Death_Event']
 
 x = PowerTransformer().fit_transform(x)
 
