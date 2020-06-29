@@ -30,7 +30,7 @@
       href="https://github.com/omotayo-alade/heart-failure-survival/blob/master/README.md" target="_blank">README</a>
   </header>
   <main class="col-12 d-flex justify-center main" style="display: flex; justify-content: center; margin: 4em 0;">
-    <form action="{{ url_for('predict')}}" method="post">
+    <form action="/predict" method="POST">
       <h1 style="font-size: 3em;">Predict Survival Probability</h1>
       <div class="form-group">
        <!-- <label for="creatinine">Creatinine Phosphokinase (mcg/L)</label> -->
@@ -53,7 +53,7 @@
           required>
       </div>
       <div class="form-group">
-        <button id="submit" type="submit" class="btn btn-primary btn-block btn-large"
+        <button type="submit" value="Submit" id="submit" class="btn btn-primary btn-block btn-large"
         data-toggle="modal" data-target="#myModal">Predict</button>
 
         <p class="text-center mt-2" style="font-size: 13px; padding-top: 10px;";>Made with 💓 by <a
@@ -62,36 +62,32 @@
     </form>
   </main>
   <!-- Modal -->
+  {% if show_prediction %}
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="output" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="output">Prediction</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
         </div>
         <div class="modal-body">
           <!-- Prediction output to be ingested here  -->
-          {{ prediction_text }}
+          {{ prediction }}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
-    <script>
-      $('#myModal').on('shown.bs.modal', () => {
-        $('#myInput').trigger('focus');
-      });
-
-      // select submit button by id
-      const btn = document.querySelector('#submit');
-      // prevent http default on click of the button
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-      });
-    </script>
+  </div>
+  {% endif %}
+  <script>
+    $(document).ready(function () {
+    $('#myModal').modal({
+           backdrop: 'static',
+           keyboard: false
+    })
+   });
+  </script>
 </body>
 
 </html>
