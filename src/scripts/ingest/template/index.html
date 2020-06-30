@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="A classification model that predicts a patient's chance of survival proceeding a heart failure.">
-  <title>Heart Failure Survival Analysis</title>
-  <style data-jss="" data-meta="MuiTypography">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A classification model that predicts a patient's chance of survival proceeding a heart failure.">
+        <title>Heart Failure Survival Analysis</title>
+        <style data-jss="" data-meta="MuiTypography">
     .MuiTypography-root {
       margin: 0;
     }
@@ -157,8 +155,8 @@
     .MuiTypography-displayBlock {
       display: block;
     }
-    </style>
-  <style data-jss="" data-meta="MuiContainer">
+        </style>
+        <style data-jss="" data-meta="MuiContainer">
     .MuiContainer-root {
       width: 100%;
       display: block;
@@ -223,8 +221,8 @@
         max-width: 1920px;
       }
     }
-    </style>
-  <style data-jss="" data-meta="makeStyles">
+        </style>
+        <style data-jss="" data-meta="makeStyles">
     .jss1 {
       display: flex;
       padding: 16px;
@@ -234,8 +232,8 @@
     .jss2:hover {
       color: #3977fa;
     }
-    </style>
-  <style data-jss="" data-meta="makeStyles">
+        </style>
+        <style data-jss="" data-meta="makeStyles">
     .jss39 {
       display: flex;
       margin-top: 24px;
@@ -255,85 +253,132 @@
     .jss43 {
       margin: 24px 0px 16px;
     }
-    </style>
-
-  <!-- CSS only -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <!-- JS, Popper.js, and jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-    crossorigin="anonymous"></script>
-</head>
-
-<body>
-  <header class="jss1">
-    <a style="padding-bottom: 0%;" class="MuiTypography-root MuiLink-root MuiLink-underlineHover jss2 MuiTypography-colorInherit"
-    target="_blank" rel="noopener" style="float: right; margin: 2em;"
-      href="https://github.com/omotayo-alade/heart-failure-survival/blob/master/README.md">README</a>
-  </header>
-  <main class="MuiContainer-root MuiContainer-maxWidthXs" style="display: flex; justify-content: center;">
-    <div class="jss39">
-    <img class="jss43" style="width: 100px; height: 100;" alt="heart-failure" src="https://raw.githubusercontent.com/omotayo-alade/heart-failure-survival/master/src/scripts/ingest/template/assets/heart.png"> 
-    <h1 class="MuiTypography-root MuiTypography-h5" style="text-align: center;">A survival probability predictor for heart failure patients</h1>
-    <form class="jss41" action="/predict" method="POST" id="myForm">
-      <div class="form-group">
-       <!-- <label for="creatinine">Creatinine Phosphokinase (mcg/L)</label> -->
-        <input type="text" class="form-control" id="creatinine" name="creatinine_phosphokinase"
-          placeholder="Creatinine Phosphokinase (mcg/L)" required>
-      </div>
-      <div class="form-group">
-      <!--  <label for="ejection">Ejection Fraction (%)</label> -->
-        <input type="text" class="form-control" name="ejection_fraction" id="ejection"
-          placeholder="Ejection Fraction (%)" required>
-      </div>
-      <div class="form-group">
-      <!-- <label for="serum">Serum Creatinine (mg/dL)</label> -->
-        <input type="text" class="form-control" name="serum_creatinine" id="serum"
-          placeholder="Serum Creatinine (mg/dL)" required>
-      </div>
-      <div class="form-group">
-      <!--  <label for="time">Follow-up Period (No of Days)</label> -->
-        <input type="text" class="form-control" id="time" name="time" placeholder="Follow-up Period (No of Days)"
-          required>
-      </div>
-      <div class="form-group">
-        <button type="submit" id="submit" class="btn btn-primary btn-block btn-large"
-        data-toggle="modal" data-target="#myModal">Predict</button>
-
-        <p class="text-center mt-2" style="font-size: 13px; padding-top: 10px;">Made with 💓 by <a
-            href="https://github.com/omotayo-alade">Omotayo Alade</a></p>
-      </div>
-    </form>
-  </div>
-  </main>
-  <!-- Modal -->
-  {% if show_prediction %}
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="output" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="output">Prediction</h5>
+        </style>
+        <!-- CSS only -->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            crossorigin="anonymous"
+        >
+        <!-- JS, Popper.js, and jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header class="jss1">
+            <a
+                style="padding-bottom: 0%;"
+                class="MuiTypography-root MuiLink-root MuiLink-underlineHover jss2 MuiTypography-colorInherit"
+                target="_blank"
+                rel="noopener"
+                style="float: right; margin: 2em;"
+                href="https://github.com/omotayo-alade/heart-failure-survival/blob/master/README.md"
+            >README</a>
+        </header>
+        <main class="MuiContainer-root MuiContainer-maxWidthXs" style="display: flex; justify-content: center;">
+            <div class="jss39">
+                <img
+                    class="jss43"
+                    style="width: 100px; height: 100;"
+                    alt="heart-failure"
+                    src="https://raw.githubusercontent.com/omotayo-alade/heart-failure-survival/master/src/scripts/ingest/template/assets/heart.png"
+                >
+                <h1 class="MuiTypography-root MuiTypography-h5" style="text-align: center;">A survival probability predictor for heart failure patients</h1>
+                <form
+                    class="jss41"
+                    action="/predict"
+                    method="POST"
+                    id="myForm"
+                >
+                    <div class="form-group">
+                        <!-- <label for="creatinine">Creatinine Phosphokinase (mcg/L)</label> -->
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="creatinine"
+                            name="creatinine_phosphokinase"
+                            placeholder="Creatinine Phosphokinase (mcg/L)"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <!--  <label for="ejection">Ejection Fraction (%)</label> -->
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="ejection_fraction"
+                            id="ejection"
+                            placeholder="Ejection Fraction (%)"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <!-- <label for="serum">Serum Creatinine (mg/dL)</label> -->
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="serum_creatinine"
+                            id="serum"
+                            placeholder="Serum Creatinine (mg/dL)"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <!--  <label for="time">Follow-up Period (No of Days)</label> -->
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="time"
+                            name="time"
+                            placeholder="Follow-up Period (No of Days)"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <button
+                            type="submit"
+                            id="submit"
+                            class="btn btn-primary btn-block btn-large"
+                            data-toggle="modal"
+                            data-target="#myModal"
+                        >Predict</button>
+                        <p class="text-center mt-2" style="font-size: 13px; padding-top: 10px;">Made with 💓 by
+                            <a href="https://github.com/omotayo-alade">Omotayo Alade</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <!-- Modal -->
+        {% if show_prediction %}
+        <div
+            class="modal fade"
+            id="myModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="output"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="output">Prediction</h5>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Prediction output to be ingested here  -->
+                        <p class="text-center mt-2" style="font-size: 1.2em; font-style: oblique; font-weight: bold;
+                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{{ prediction }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <!-- Prediction output to be ingested here  -->
-          <p class="text-center mt-2" style="font-size: 1.2em; font-style: oblique; font-weight: bold;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{{ prediction }}</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  {% endif %}
-  <script>
+        {% endif %}
+        <script>
     jQuery("#submit").prop('disabled', true);
 
     var toValidate = jQuery('#time'),
@@ -366,7 +411,6 @@
     $(document).on('hide.bs.modal', '#myModal', function (e) {
         $('#myModal').empty();
     });
-  </script>
-</body>
-
+        </script>
+    </body>
 </html>
