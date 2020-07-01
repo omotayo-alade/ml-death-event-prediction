@@ -15,9 +15,9 @@ def predict():
     '''
     For rendering results on HTML GUI
     '''
-    int_features = [float(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
-    result = model.predict_proba(final_features).tolist()
+    lst = [float(x) for x in request.form.values()]
+    features = [np.array(lst)]
+    result = model.predict_proba(features)
     output = round((result[0][1] * 100), 2)
 
     model_prediction = 'Patient has about {}% chance of survival.'.format(output)
