@@ -18,7 +18,7 @@ def predict():
     lst = [float(x) for x in request.form.values()]
     features = [np.array(lst)]
     result = model.predict_proba(features)
-    output = round((result[0][1] * 100), 2)
+    output = round((result[0][0] * 100), 2)
 
     model_prediction = 'Patient has about {}% chance of survival.'.format(output)
 
