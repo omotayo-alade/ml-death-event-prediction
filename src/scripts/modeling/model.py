@@ -14,10 +14,11 @@ x = dataset[['CP', 'EF', 'SC', 'Time']]
 y = dataset['Death_Event']
 
 # Splitting dataset into training and testing data
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=25)
+np.random.seed(25)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 
 # Creating and fitting pipeline
-estimator = LogisticRegression(C=0.4, max_iter=300, penalty='elasticnet', solver='saga', l1_ratio=1, random_state=25)
+estimator = LogisticRegression(C=0.7, max_iter=200, penalty='l2', solver='liblinear')
 pipe = Pipeline([('scaler', MinMaxScaler()), ('est', estimator)])
 model = pipe.fit(x_train, y_train)
 
