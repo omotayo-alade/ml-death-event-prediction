@@ -22,7 +22,7 @@ defusedxml==0.6.0
 docker==4.2.1
 entrypoints==0.3
 fake-useragent==0.1.11
-fastapi==0.58.0
+fastapi==0.65.2
 Flask==1.1.2
 folium==0.11.0
 geojson==2.5.0
